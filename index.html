@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Under Maintenance</title>
+    <style>
+      /* Reset básico */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        background-color: #000;
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        user-select: none;
+        overflow: hidden;
+      }
+
+      /* Fundo com blur e gradiente escuro */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at center, #111 0%, #000 80%);
+        filter: blur(15px);
+        z-index: -1;
+      }
+
+      h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        white-space: nowrap;
+      }
+
+      /* Animação dos pontinhos */
+      .dots::after {
+        content: "";
+        display: inline-block;
+        width: 1.2em;
+        text-align: left;
+        animation: dotsBlink 1.5s infinite steps(4, end);
+      }
+
+      /* Usamos steps(4) pra simular 0,1,2,3 pontos */
+      @keyframes dotsBlink {
+        0% {
+          content: "";
+        }
+        25% {
+          content: ".";
+        }
+        50% {
+          content: "..";
+        }
+        75% {
+          content: "...";
+        }
+        100% {
+          content: "";
+        }
+      }
+
+      p {
+        font-size: 1.5rem;
+        letter-spacing: 0.07em;
+        opacity: 0.75;
+        font-weight: 400;
+        max-width: 90vw;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Under Maintenance<span class="dots"></span></h1>
+    <p>Innovations in progress.</p>
+  </body>
+</html>
