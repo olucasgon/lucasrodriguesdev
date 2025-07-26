@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfólio em Manutenção</title>
+    <title>Portfolio - Loading</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
         margin: 0;
         padding: 0;
-        overflow: hidden; /* Garante que o conteúdo de background não cause scroll */
-        font-family: "Orbitron", sans-serif; /* Fonte moderna e tecnológica */
+        overflow: hidden;
+        font-family: "Roboto Mono", monospace; /* Fonte tecnológica e minimalista */
         color: #ffffff; /* Texto branco */
+        background-color: #000000; /* Fundo preto */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -22,73 +23,89 @@
         min-height: 100vh;
         text-align: center;
         position: relative;
-        background-color: #000000; /* Fundo preto sólido */
       }
 
-      /* Efeito de fundo com blur (simulando algo atrás) */
-      .background-blur {
+      .loading-container {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-          45deg,
-          rgba(0, 255, 255, 0.1),
-          rgba(138, 43, 226, 0.1),
-          rgba(255, 0, 255, 0.1)
-        ); /* Cores sutis para o blur */
-        filter: blur(50px); /* Ajuste o valor para mais ou menos blur */
-        z-index: 1;
-        animation: pulse-background 15s infinite alternate; /* Animação sutil */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000000;
+        z-index: 10;
+        transition: opacity 1.5s ease-out; /* Transição suave para esconder */
       }
 
-      /* Animação para o background */
-      @keyframes pulse-background {
+      .loading-bar {
+        width: 80px;
+        height: 5px;
+        background-color: #ffffff;
+        overflow: hidden;
+        position: relative;
+        opacity: 0.7;
+      }
+
+      .loading-bar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #ffffff,
+          transparent
+        );
+        animation: load 2s infinite linear;
+      }
+
+      @keyframes load {
         0% {
-          transform: scale(1);
-          opacity: 0.8;
+          left: -100%;
         }
         100% {
-          transform: scale(1.1);
-          opacity: 1;
+          left: 100%;
         }
       }
 
       .content {
         position: relative;
-        z-index: 2; /* Garante que o texto esteja acima do background */
+        z-index: 1;
         padding: 20px;
         max-width: 800px;
+        opacity: 0; /* Começa invisível e aparece após o loading */
+        transform: translateY(20px);
+        transition: opacity 1.5s ease-out 1.5s, transform 1.5s ease-out 1.5s; /* Delay para aparecer depois do loading */
       }
 
       h1 {
-        font-size: 4em; /* Tamanho maior para "Em Manutenção..." */
+        font-size: 3.5em; /* Tamanho ajustado para um visual clean */
         margin-bottom: 10px;
-        letter-spacing: 5px; /* Espaçamento entre letras */
-        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5),
-          0 0 20px rgba(138, 43, 226, 0.5); /* Efeito neon sutil */
-        animation: fadeIn 2s ease-out;
+        letter-spacing: 3px;
+        text-transform: uppercase; /* Para um toque mais "tech" */
       }
 
       p {
-        font-size: 1.5em;
+        font-size: 1.3em;
         margin-top: 0;
-        letter-spacing: 2px;
-        opacity: 0.8;
-        animation: fadeIn 3s ease-out;
+        letter-spacing: 1px;
+        opacity: 0.9;
       }
 
-      /* Animação de fade-in para o texto */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      /* Classes para esconder o loading e mostrar o conteúdo */
+      body.loaded .loading-container {
+        opacity: 0;
+        pointer-events: none; /* Impede interações após sumir */
+      }
+
+      body.loaded .content {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       /* Media queries para responsividade */
@@ -97,28 +114,39 @@
           font-size: 2.5em;
         }
         p {
-          font-size: 1.2em;
+          font-size: 1.1em;
         }
       }
 
       @media (max-width: 480px) {
         h1 {
           font-size: 1.8em;
-          letter-spacing: 3px;
+          letter-spacing: 2px;
         }
-
         p {
-          font-size: 1em;
-          letter-spacing: 1px;
+          font-size: 0.9em;
+          letter-spacing: 0.5px;
         }
       }
     </style>
   </head>
   <body>
-    <div class="background-blur"></div>
-    <div class="content">
-      <h1>Em Manutenção...</h1>
-      <p>Melhorias em andamento.</p>
+    <div class="loading-container">
+      <div class="loading-bar"></div>
     </div>
+
+    <div class="content">
+      <h1>Under Maintenance</h1>
+      <p>Enhancements in progress.</p>
+    </div>
+
+    <script>
+      // Simula um tempo de carregamento e depois remove a tela de loading
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.body.classList.add("loaded");
+        }, 1000); // 1 segundo de simulação de carregamento
+      });
+    </script>
   </body>
 </html>
