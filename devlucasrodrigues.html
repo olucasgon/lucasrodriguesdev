@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV LUCAS RODRIGUES</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14' font-size='14' font-family='monospace' fill='white'>&gt;_</text></svg>"
+      type="image/svg+xml"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: "Roboto Mono", monospace; /* Modern and minimalist tech font */
+        color: #ffffff; /* White text */
+        background-color: #000000; /* Black background */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        text-align: center;
+        position: relative;
+      }
+
+      .loading-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000000;
+        z-index: 10;
+        transition: opacity 1.5s ease-out; /* Smooth transition to hide */
+      }
+
+      .loading-bar {
+        width: 80px;
+        height: 5px;
+        background-color: #ffffff;
+        overflow: hidden;
+        position: relative;
+        opacity: 0.7;
+      }
+
+      .loading-bar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #ffffff,
+          transparent
+        );
+        animation: load 2s infinite linear;
+      }
+
+      @keyframes load {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        max-width: 800px;
+        opacity: 0; /* Starts invisible and appears after loading */
+        transform: translateY(20px);
+        transition: opacity 1.5s ease-out 1.5s, transform 1.5s ease-out 1.5s; /* Delay to appear after loading */
+      }
+
+      h1 {
+        font-size: 3.5em; /* Adjusted size for a clean look */
+        margin-bottom: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase; /* For a more "tech" feel */
+      }
+
+      p {
+        font-size: 1.3em;
+        margin-top: 0;
+        letter-spacing: 1px;
+        opacity: 0.9;
+      }
+
+      /* Buttons Container */
+      .button-group {
+        margin-top: 30px; /* Space above buttons */
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        gap: 20px; /* Space between buttons */
+      }
+
+      .social-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border: 1px solid #ffffff; /* White border */
+        color: #ffffff; /* White text */
+        text-decoration: none;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: transparent; /* Transparent background */
+      }
+
+      .social-button:hover {
+        background-color: #ffffff; /* White background on hover */
+        color: #000000; /* Black text on hover */
+        transform: translateY(-3px); /* Subtle lift effect */
+      }
+
+      .social-button .icon {
+        width: 24px; /* Set a fixed width for the SVG icon */
+        height: 24px; /* Set a fixed height for the SVG icon */
+        margin-right: 10px; /* Space between icon and text */
+        fill: #ffffff; /* Default fill color for SVG icon */
+        transition: fill 0.3s ease; /* Smooth transition for icon color */
+      }
+
+      .social-button:hover .icon {
+        fill: #000000; /* Black fill on hover */
+      }
+
+      /* Classes to hide loading and show content */
+      body.loaded .loading-container {
+        opacity: 0;
+        pointer-events: none; /* Prevents interaction after disappearing */
+      }
+
+      body.loaded .content {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Media queries for responsiveness */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5em;
+        }
+        p {
+          font-size: 1.1em;
+        }
+        .social-button {
+          font-size: 1em;
+          padding: 8px 15px;
+        }
+        .social-button .icon {
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.8em;
+          letter-spacing: 2px;
+        }
+        p {
+          font-size: 0.9em;
+          letter-spacing: 0.5px;
+        }
+        .button-group {
+          flex-direction: column; /* Stack buttons vertically on very small screens */
+          gap: 10px; /* Reduced gap when stacked */
+        }
+        .social-button {
+          width: 80%; /* Make buttons wider */
+          margin: 0 auto; /* Center buttons */
+        }
+      }
+      .typing {
+        display: inline-block; /* necessário para usar width e animação */
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 0.15em solid white;
+        animation: typing 3.5s steps(30, end) forwards,
+          /* "forwards" mantém o último frame */ blink-caret 0.8s step-end
+            infinite;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-container">
+      <div class="loading-bar"></div>
+    </div>
+
+    <div class="content">
+      <h1 class="typing">Under Maintenance...</h1>
+      <p>Enhancements in progress.</p>
+
+      <div class="button-group">
+        <a
+          href="https://www.linkedin.com/in/olucasrodrigues"
+          target="_blank"
+          class="social-button"
+        >
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M20.447 20.452h-3.554v-5.564c0-1.352-.027-3.098-1.884-3.098-1.887 0-2.172 1.47-2.172 3.007v5.655H9.257V9.088h3.416v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.46V20.452zM5.943 7.962c-1.22 0-2.203-.993-2.203-2.214 0-1.23.983-2.214 2.203-2.214s2.203.984 2.203 2.214c0 1.221-.983 2.214-2.203 2.214zm-.006 12.49h-3.56V9.088h3.56v11.364z"
+            />
+          </svg>
+          LinkedIn
+        </a>
+
+        <a
+          href="https://github.com/olucasgon"
+          target="_blank"
+          class="social-button"
+        >
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.082-.74.08-.725.08-.725 1.192.084 1.815 1.226 1.815 1.226 1.06 1.813 2.781 1.299 3.465.993.108-.775.418-1.299.762-1.594-2.645-.295-5.424-1.322-5.424-5.923 0-1.311.469-2.381 1.236-3.221-.124-.296-.534-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.243 2.88.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.626-5.434 5.914.435.378.823 1.107.823 2.222v3.293c0 .319.192.694.801.576c4.765-1.589 8.197-6.088 8.197-11.386C24 5.373 18.627 0 12 0z"
+            />
+          </svg>
+          GitHub
+        </a>
+
+        <a
+          href="https://www.instagram.com/olucasgon/"
+          target="_blank"
+          class="social-button"
+        >
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M12 2C8.683 2 7.025 2.112 5.925 2.583 5.483 2.76 5.093 3.011 4.757 3.346 4.421 3.682 4.17 4.072 3.993 4.514 3.523 5.614 3.412 7.261 3.412 12c0 4.739.112 6.386.582 7.486.177.442.428.832.764 1.168.336.335.726.586 1.168.763 1.1.47 2.756.582 7.486.582 4.74 0 6.387-.112 7.487-.582.441-.177.832-.428 1.167-.763.336-.336.587-.726.764-1.168.47-1.1.582-2.747.582-7.486 0-4.739-.112-6.386-.582-7.486-.177-.442-.428-.832-.764-1.168-.336-.335-.726-.586-1.168-.763C18.387 2.112 16.741 2 12 2zm0 1.635c4.646 0 6.096.108 7.078.502.26.107.487.256.666.435.18.18.33.407.436.666.394.982.502 2.432.502 7.079 0 4.645-.108 6.096-.502 7.078-.107.26-.256.487-.435.666-.18.18-.407.33-.666.436-.982.394-2.432.502-7.079.502-4.646 0-6.096-.108-7.078-.502-.26-.107-.487-.256-.666-.435-.18-.18-.33-.407-.436-.666-.394-.982-.502-2.432-.502-7.079 0-4.646.108-6.096.502-7.078.107-.26.256-.487.435-.666.18-.18.407-.33.666-.436.982-.394 2.432-.502 7.079-.502zM12 7.854c-2.298 0-4.146 1.848-4.146 4.146s1.848 4.146 4.146 4.146 4.146-1.848 4.146-4.146-1.848-4.146-4.146-4.146zm0 1.635c1.408 0 2.511 1.103 2.511 2.511s-1.103 2.511-2.511 2.511-2.511-1.103-2.511-2.511 1.103-2.511 2.511-2.511zm5.21-.989c-.611 0-1.103.492-1.103 1.103s.492 1.103 1.103 1.103 1.103-.492 1.103-1.103-.492-1.103-1.103-1.103z"
+            />
+          </svg>
+          Instagram
+        </a>
+
+        <a href="mailto:lucasgonzagar@hotmail.com" class="social-button">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M22 6c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6zm-2 0l-8 5.333L4 6h16zm0 12H4V8l8 5.333L20 8v10z"
+            />
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Simulates a loading time and then removes the loading screen
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.body.classList.add("loaded");
+        }, 1000); // 1 second loading simulation
+      });
+    </script>
+  </body>
+</html>
